@@ -27,7 +27,7 @@ for i= 1:n;
 end
 
 %t = [t n*h];
-t = 0:h:10;
+t = 0:h:T;
 y = [x1', x2'];
 end
 

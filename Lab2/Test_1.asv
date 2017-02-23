@@ -11,13 +11,12 @@ alpha = 2;
 u0 = [0.1 0];
 T = 10;
 n = 1000;
-
 i = 4;
-x = zeros(1,i);
+x = zeros(i,1);
 
 for k = 1:i
-    [t,y] = feuler(u0,T,(n*k),alpha);
-    x(k) = y(end,1);
+    [t,y] = feuler(u0,T,n*k,alpha);
+    x(k) = y((T*(n*k)+1),1);
 end
 
 
