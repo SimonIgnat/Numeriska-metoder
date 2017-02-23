@@ -10,15 +10,27 @@ plot(t,y(:,1),'b',t,y(:,2),'r');
 alpha = 2;
 u0 = [0.1 0];
 T = 10;
-n = 1000;
 
-i = 4;
-x = zeros(1,i);
+N = [100, 500, 1000, 2000];
+i = 1;
+for n = N
+    factorsOfn = [n, 2*n, 4*n];
+    x = zeros(1,length(N));
 
-for k = 1:i
-    [t,y] = feuler(u0,T,(n*k),alpha);
-    x(k) = y(end,1);
+    j = 1;
+    for k = factorsOfn
+        [t,y] = feuler(u0,T,(n*k),alpha);
+        x(i) = y(end,1);
+        j = j+1;
+    end
+    kvot(i) =  (x(3) - x(2))/(x(2) - x(1));    
 end
+
+
+
+
+
+
 
 
 
