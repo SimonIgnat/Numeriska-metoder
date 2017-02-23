@@ -12,10 +12,12 @@ u0 = [0.1 0];
 T = 10;
 
 N = [100, 500, 1000, 2000];
+
+kvot = zeros(1, length(N)
 i = 1;
 for n = N
     factorsOfn = [n, 2*n, 4*n];
-    x = zeros(1,length(N));
+    x = zeros(1,length(factorsOfn));
 
     j = 1;
     for k = factorsOfn
@@ -25,10 +27,6 @@ for n = N
     end
     kvot(i) =  (x(3) - x(2))/(x(2) - x(1));    
 end
-
-
-
-
 
 
 
