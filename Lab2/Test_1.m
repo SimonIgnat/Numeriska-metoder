@@ -2,7 +2,7 @@
 alpha = 2;
 u0 = [0.1 0];
 T = 10;
-n = 1000;
+n = 20000;
 [t,y] = feuler(u0,T,n,alpha);
 plot(t,y(:,1),'b',t,y(:,2),'r');
 
