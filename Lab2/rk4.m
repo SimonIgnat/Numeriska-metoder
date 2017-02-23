@@ -1,4 +1,4 @@
-function [t,y] = rk4( u0,T,n,alpha) )
+function [t,y] = rk4(u0,T,n,alpha)
 %alluh akbar
 
 %u0 = initial
@@ -19,10 +19,26 @@ x2(1) = u0(2);
 
 a = alpha; L = 1; m = 0.1; g = 9.81; h = T/n; t = [];
 %x' = A*x + Bu = 0.
-t =[]; 
+t =[];
+
+
+% x1' = x2;
+% x2' = -(a*x2(i)/m) - (g/L)*x1(i);
+%dydx = f(x).
+
+
 for i= 1:n;
-    x1(i+1) = x1(i) + h*x2(i);
-    x2(i+1) = x2(i) + h*(-(a*x2(i)/m) - (g/L)*x1(i));
+    k11 = h*x2(i);
+    k21 = h*(x1(i)+(1/2)*k11);
+    k31 = h*(x1(i)+(1/2)*k21);
+    k41 = h*(x1(i)+k31);
+    x1(i+1) = x1(i) + (k11+2*k21+2*k31+k41)/6;
+    
+    k12 = h*(-a*x2(i)/m-(g/L)*x1(i));
+    k22 = h*(x2(i) + (1/2)*k12);
+    k32 = h*(x2(i) + (1/2)*k22);
+    k42 = h*(x2(i) + k32);
+    x2(i+1) = x2(i) +(k12+2*k22+2*k32+2*k42)/6;
     %t = [t (i-1)*h];
 end
 
