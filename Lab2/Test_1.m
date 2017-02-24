@@ -45,20 +45,24 @@ plot(t,y(:,1),'b',t,y(:,2),'r');
 
 
 %%
+
+clear all, close all
 alpha = 2;
 alpha_nonlinear = 0.05;
 T = 10;
 n = 1000;
 
-phis = [0.1, 1, 1.5, 3.1];
+phis = [0.01, 1, 1.5, 3.1];
 
 i = 1;
+
 figure(1)
 for phi = phis
     u0 = [phi,0];
-    [t_lin, y_lin] = rk4(u0,T,n,alpha);
-    [t_nlin, y_nlin] = rk4olin(u0,T,n,alpha);
+    [t_lin, y_lin] = rk4(u0,T,n,alpha_nonlinear);
+    [t_nlin, y_nlin] = rk4olin(u0,T,n,alpha_nonlinear);
     
+  
     subplot(2,2,i)
     hold on
     plot(t_lin,y_lin(:,1), 'DisplayName', 'linear');
@@ -70,6 +74,48 @@ for phi = phis
     
     i = i +1;
 end
+
+%% d)
+
+clear all, close all
+
+alpha_nonlinear = 0.05;
+T = 10;
+n = 100;
+L = 1;
+
+phis = [5]
+
+i = 1;
+
+figure(1)
+for phi = phis
+    u0 = [phi,0];
+    [t_nlin, y_nlin] = rk4olin(u0,T,n,alpha_nonlinear);
+    P = y_nlin(:,1);
+    
+    subplot(2,2,i)
+    for k=1:length(P) 
+        plot([-L L],[0,0],[0 L*sin(P(k))],[0 -L*cos(P(k))],'-o'); 
+        axis equal 
+        axis(1.2*[-L L -L L]); 
+        drawnow 
+    end 
+    title(sprintf('Phi_0 = %.f',phi));
+    i = i + 1;
+end
+
+
+%%
+
+
+
+
+
+
+
+
+
 
 
 
