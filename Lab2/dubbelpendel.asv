@@ -11,14 +11,11 @@ phi2 = zeros(1,n);
 
 plot(T_out,Y_out(:,1),'r',T_out,Y_out(:,3));
 
-L1 = 1.5;
-L2 = 1;
-M1 = 1;
-M2 = 1.5;
+
 
 for k=1:length(Y_out)
-plot([-L1 L1],[0,0],[0 L1*sin(Y_out(k,1))],[0 -L1*cos(Y_out(k,1))],’-o’);hold on;
-plot([-L2 L2],[L1*sin(Y_out(k,1) (L1*sin(Y_out(k,1))+L2*sin(Y_out(k,2))])
+plot([-L L],[0,0],[0 L*sin(Y_out(k,1))],[0 -L*cos(P(k))],’-o’);
+axis equal
 axis(1.2*[-L L -L L]);
 drawnow
 end
