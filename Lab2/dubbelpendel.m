@@ -18,7 +18,8 @@ M2 = 1.5;
 
 for k=1:length(Y_out)
 plot([-L1 L1],[0,0],[0 L1*sin(Y_out(k,1))],[0 -L1*cos(Y_out(k,1))],'-o');hold on;
-plot([-L2 L2],[ L1*sin(Y_out(k,1)) (L1*sin(Y_out(k,1))+L2*sin(Y_out(k,3)))],[-L1*cos(Y_out(k,1)) -L1*cos(Y_out(k,1))-L2*cos(Y_out(k,3))],'-o');
-axis(1.2*[-L1 L1+L2 -L1 L1+L2]);
+plot([L1*sin(Y_out(k,1)) (L1*sin(Y_out(k,1))+L2*sin(Y_out(k,3)))],[-L1*cos(Y_out(k,1)) -L1*cos(Y_out(k,1))-L2*cos(Y_out(k,3))],'-o');
+hold off;
+axis(1.2*[-L1-L2 L1+L2 -L1-L2 L1+L2]);
 drawnow
 end
