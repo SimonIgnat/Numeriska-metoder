@@ -1,5 +1,9 @@
 %% Task 1, finitia differensmetoden
-L = 2; k = 3; t0 = 290; tL = 320; n = 50; h = L /(n+1); x = 0:h:L;
+L = 2; k = 3; t0 = 290;
+tL = 320;
+n = 50;
+h = L /(n+1);
+x = 0:h:L;
 
 %Q(x) = -d/dx(k*dT/dx), T(0) = t0, T(L) = t1.
 %Q(x) = 5000*exp(-500(x-0.25L)^2) + 1200exp(-10(x-0.7L)^2), 0\geq \geq L.
@@ -19,4 +23,3 @@ b = ([(Q(2)+(t0*k)) Q(3:(end-2)) (Q(end-1)+ (tL*k))]*(1/k))';
 
 T = A\b+273.15 % just to get K.
 plot(x(2:end-1),T)
-%%
