@@ -58,7 +58,10 @@ for n = N
    fprintf('max = %.1f\n', maxVal)
    fprintf('min = %.1f\n', minVal)
    fprintf('mean = %.1f\n', meanVal)
-     
+   
+   
+   
+   
    disp('_________________________')
    
    plot(x,T, 'DisplayName', sprintf('n = %.1f', n))

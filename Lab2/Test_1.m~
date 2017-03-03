@@ -11,10 +11,13 @@ alpha = 2;
 u0 = [0.1 0];
 T = 10;
 
-N = [1000, 2000,4000,80];
-fprintf('___________________\n')
-fprintf('h            kvot\n')
+N = [100, 200, 400, 800, 1600, ];
+i = 1;
+
+fprintf('h     kvot')
 for n = N
+    
+    fprintf('n = %.f',n)
     
     factorsOfn = [n, 2*n, 4*n];
     x = zeros(1,length(N));
@@ -22,12 +25,16 @@ for n = N
     j = 1;
     for k = factorsOfn
         [t,y] = feuler(u0,T,(n*k),alpha);
-        x(j) = y(end,1);
+        x(i) = y(end,1);
         j = j + 1;
     end
+    
+    
+    kvot(i) =  (x(3) - x(2))/(x(2) - x(1));
+    fprintf('%f     %f', T/n, kvot(i));
+    
+    i = i + 1;
    
-    kvot = (x(3) - x(2))/(x(2) - x(1));
-    fprintf('%f     %f\n', T/n, kvot);
 end
 %%
 alpha = 2;
