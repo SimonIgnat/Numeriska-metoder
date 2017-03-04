@@ -2,18 +2,21 @@
 alpha = 2;
 u0 = [0.1 0];
 T = 10;
-n = 200000;
+n = 1000;
 [t,y] = feuler(u0,T,n,alpha);
 plot(t,y(:,1),'b',t,y(:,2),'r');
+y(end,1)
+
 
 %% 
 alpha = 2;
 u0 = [0.1 0];
 T = 10;
 
-N = [1000, 2000,4000,80];
-fprintf('___________________\n')
-fprintf('h            kvot\n')
+N = [10, 20,40,80, 160, 320, 640, 1280, 2560];
+fprintf('Framm?t euler nogranhetstabell\n')
+fprintf('__________________________________________________________________\n')
+fprintf('h            u_h           u_h-u_(h/2)    kvot          ordning\n')
 for n = N
     
     factorsOfn = [n, 2*n, 4*n];
@@ -26,9 +29,9 @@ for n = N
         j = j + 1;
     end
    
-    kvot = (x(3) - x(2))/(x(2) - x(1));
-    fprintf('%f     %f\n', T/n, kvot);
-end
+    kvot = (x(1) - x(2))/(x(2) - x(3));
+    fprintf('%f     %f      %f       %f      %f\n', T/n,x(1), x(1)-x(2), kvot, log2(kvot));
+end 
 %%
 alpha = 2;
 u0 = [0.1 0];
@@ -36,6 +39,33 @@ T = 10;
 n = 1000;
 [t,y] = rk4(u0,T,n,alpha);
 plot(t,y(:,1),'b',t,y(:,2),'r');
+y(end,1)
+
+%%
+alpha = 2;
+u0 = [0.1 0];
+T = 10;
+
+N = [10, 20,40,80, 160, 320, 640, 1280, 2560];
+fprintf('Runge-Kutta4 nogranhetstabell\n')
+fprintf('__________________________________________________________________\n')
+fprintf('h            u_h           u_h-u_(h/2)    kvot          ordning\n')
+for n = N
+    
+    factorsOfn = [n, 2*n, 4*n];
+    x = zeros(1,length(factorsOfn));
+
+    j = 1;
+    for k = factorsOfn
+        [t,y] = rk4(u0,T,(n*k),alpha);
+        x(j) = y(end,1);
+        j = j + 1;
+    end
+   
+    kvot = (x(1) - x(2))/(x(2) - x(3));
+    fprintf('%f     %f      %f       %f      %f\n', T/n,x(1), x(1)-x(2), kvot, log2(kvot));
+end 
+
 
 %%
 alpha = 0.05;
@@ -44,8 +74,6 @@ T = 10;
 n = 1000;
 [t,y] = rk4olin(u0,T,n,alpha);
 plot(t,y(:,1),'b',t,y(:,2),'r');
-
-
 
 
 %%

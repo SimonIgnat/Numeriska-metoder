@@ -1,6 +1,4 @@
 function [t,y] = rk4(u0,T,n,alpha)
-%alluh akbar
-
 %u0 = initial
 % T = total time
 % n = num of points??
@@ -17,35 +15,30 @@ x2 = zeros(1,n+1); % phi'
 x1(1) = u0(1);
 x2(1) = u0(2);
 
-a = alpha; L = 1; m = 0.1; g = 9.81; h = T/n; t = [];
-%x' = A*x + Bu = 0.
-t =[];
+a = alpha; L = 1; m = 0.1; g = 9.81; h = T/n;
 
-
-% x1' = x2;
-% x2' = -(a*x2(i)/m) - (g/L)*x1(i);
-%dydx = f(x).
-
-
-for i= 1:n;
-    k11 = h*x2(i);
-    k21 = h*(x2(i)+(1/2)*k11);              % due to linearity, f(x+h) = f(x)+f(h).
-    k31 = h*(x2(i)+(1/2)*k21);
-    k41 = h*(x2(i)+k31);
-    x1(i+1) = x1(i) + (k11+2*k21+2*k31+k41)/6;
+for i= 1:n
+   
+    k0 = h*x2(i);
+    l0 = h*(-(a*x2(i)/m)-(g/L)*x1(i));
     
-    k12 = h*(-(a*x2(i)/m)-(g/L)*x1(i));
-    k22 = h*(x2(i) + (1/2)*k12);
-    k32 = h*(x2(i) + (1/2)*k22);
-    k42 = h*(x2(i) + k32);
-    x2(i+1) = x2(i) +(k12+2*k22+2*k32+k42)/6;
-    %t = [t (i-1)*h];
+    k1 = h*(x2(i)+(1/2)*l0);
+    l1 = h*(-a/m*(x2(i)+(1/2)*l0)-(g/L)*(x1(i)+(1/2)*k0));
+    
+    k2 = h*(x2(i)+(1/2)*l1);
+    l2 = h*(-a/m*(x2(i)+(1/2)*l1)-(g/L)*(x1(i)+(1/2)*k1));
+    
+    k3 = h*(x2(i)+l2);
+    l3 = h*(-a/m*(x2(i)+l2)-(g/L)*(x1(i)+k2));
+    
+    x1(i+1) = x1(i) + (1/6)*(k0+2*k1+2*k2+k3);
+    x2(i+1) = x2(i) + (1/6)*(l0+2*l1+2*l2+l3);
+
 end
 
-%t = [t n*h];
+
 t = 0:h:T;
 y = [x1', x2'];
 
 
 end
-
