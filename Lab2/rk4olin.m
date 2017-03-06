@@ -1,9 +1,9 @@
 function [t,y] = rk4olin(u0,T,n,alpha)
+
 %u0 = initial
 % T = total time
 % n = num of points??
 % h = sample period (h = T/N),
-
 %m*phi'' + a*phi' + mg/L * sin(phi) = 0;
 %first order. x1 = phi, x2 = phi'.
 % x1' = x2, x2' = (a*x2 + mg/L*x1)/M
