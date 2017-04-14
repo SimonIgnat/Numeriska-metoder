@@ -11,6 +11,7 @@
 
 %% RK4
 clear all, close all
+format long
 L0 = 1;
 C = 1*10^-6;
 
@@ -100,16 +101,6 @@ for u0 = uVec
     
     EtrunkT = abs(period - period2h)
 
-
-
-
-
-
-
-
-
-
-
 end
 
 %% Fourier analysis.
@@ -141,7 +132,7 @@ plotCounter = 0;
 TVecCounter = 1;
 %I_vec = cell(3,1);
 for u0 = uVec
-
+    format long
     a = [];
     plotCounter = plotCounter + 1;
     I0 = [0 u0/L0];
@@ -150,7 +141,7 @@ for u0 = uVec
     
     period = TVec(TVecCounter);
     w = 2*pi/period;
-    stepPerPeriod = TIndex(TVecCounter)/4;
+    stepPerPeriod = TIndex(TVecCounter);
     h = period/stepPerPeriod;
     %index = round(TIndex(TVecCounter)/stepPerPeriod); %Only integers allowed
     indexVec = 1:TIndex(TVecCounter)/stepPerPeriod:TIndex(TVecCounter);

@@ -100,6 +100,16 @@ for u0 = uVec
     
     EtrunkT = abs(period - period2h)
 
+
+
+
+
+
+
+
+
+
+
 end
 
 %% Fourier analysis.
@@ -134,32 +144,31 @@ for u0 = uVec
 
     a = [];
     plotCounter = plotCounter + 1;
-    subplot(3,2,plotCounter)
     I0 = [0 u0/L0];
     [t,y] = RK4_projekt(I0,T,n, L0,C);
 
     
     period = TVec(TVecCounter);
     w = 2*pi/period;
-    stepPerPeriod = 16;
+    stepPerPeriod = TIndex(TVecCounter);
     h = period/stepPerPeriod;
-    index = round(TIndex(TVecCounter)/stepPerPeriod); %Only integers allowed
-    indexVec = 1:index:index*stepPerPeriod;
-    
+    %index = round(TIndex(TVecCounter)/stepPerPeriod); %Only integers allowed
+    indexVec = 1:TIndex(TVecCounter)/stepPerPeriod:TIndex(TVecCounter);
+    indexVec = round(indexVec); %in case of decimal index. 
     
     I_f = zeros(size(t,2),1);
     for k = 1:14
-       a(k) = (2/period)*h*(sum(y(indexVec,1).*sin(k*w*(t(indexVec)')))-((y(1,1)*sin(k*w*t(1)))+y(indexVec(end),1)*sin(k*w*t(indexVec(end)))/2));
+       a(k) = (2/period)*h*(sum(y(indexVec,1).*sin(k*w*(t(indexVec)')))-((y(1,1)*sin(k*w*t(1)))+y(indexVec(end),1)*sin(k*w*t(indexVec(end))))/2));
        I_f = I_f + a(k)*sin(k*w*t(:));
     end
-    
+    %a
     %I_vec{TVecCounter,1} = I_f;
     
     
     
     
-    
-    plot(t,y(:,1),'b',t,I_f,'g'); %hold on;
+    subplot(3,2,plotCounter)
+    plot(t,y(:,1),'b',t,I_f,'g',t(TIndex(TVecCounter)),y(TIndex(TVecCounter),1),'*'); %hold on;
     title(sprintf('I(t) with U0 = %.f',u0));
     plotCounter = plotCounter + 1;
     xlim([0 0.015])
@@ -169,7 +178,7 @@ for u0 = uVec
     %title(sprintf('E(t) with U0 = %.f',u0)); 
     
     
-    TVeCounter = TVecCounter+1;
+    TVecCounter = TVecCounter+1;
     
     
 end
