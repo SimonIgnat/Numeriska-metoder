@@ -100,6 +100,16 @@ for u0 = uVec
     
     EtrunkT = abs(period - period2h)
 
+
+
+
+
+
+
+
+
+
+
 end
 
 %% Fourier analysis.
@@ -134,14 +144,13 @@ for u0 = uVec
 
     a = [];
     plotCounter = plotCounter + 1;
-    subplot(3,2,plotCounter)
     I0 = [0 u0/L0];
     [t,y] = RK4_projekt(I0,T,n, L0,C);
 
     
     period = TVec(TVecCounter);
     w = 2*pi/period;
-    stepPerPeriod = TIndex(TVecCounter);
+    stepPerPeriod = TIndex(TVecCounter)/4;
     h = period/stepPerPeriod;
     %index = round(TIndex(TVecCounter)/stepPerPeriod); %Only integers allowed
     indexVec = 1:TIndex(TVecCounter)/stepPerPeriod:TIndex(TVecCounter);
@@ -158,8 +167,8 @@ for u0 = uVec
     
     
     
-    
-    plot(t,y(:,1),'b',t,I_f,'g'); %hold on;
+    subplot(3,2,plotCounter)
+    plot(t,y(:,1),'b',t,I_f,'g',t(TIndex(TVecCounter)),y(TIndex(TVecCounter),1),'*'); %hold on;
     title(sprintf('I(t) with U0 = %.f',u0));
     plotCounter = plotCounter + 1;
     xlim([0 0.015])
@@ -169,7 +178,7 @@ for u0 = uVec
     %title(sprintf('E(t) with U0 = %.f',u0)); 
     
     
-    TVeCounter = TVecCounter+1;
+    TVecCounter = TVecCounter+1;
     
     
 end
