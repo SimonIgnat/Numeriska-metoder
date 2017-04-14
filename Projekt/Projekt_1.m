@@ -19,6 +19,7 @@ n = 5000*2;
 
 uVec = [240 1200 2400];
 plotCounter = 0;
+
 for u0 = uVec
     plotCounter = plotCounter + 1;
     subplot(3,2,plotCounter)
@@ -34,7 +35,6 @@ for u0 = uVec
     title(sprintf('E(t) with U0 = %.f',u0)); 
 end
 
-
 % ta fram frekvensen p� sinusen --> T f�r att ber�kna fouriertransform.
 
  
@@ -47,8 +47,9 @@ T = 0.3*0.05;
 n = 5000*0.05;
 
 uVec = [240 1200 2400];
-plotCounter = 0;
-
+%plotCounter = 0;
+TVec = [];
+TIndex = [];
 for u0 = uVec
     fprintf('U_0 = %.0f', u0)
     I0 = [0 u0/L0];
@@ -77,10 +78,11 @@ for u0 = uVec
         if(sign(y(i,1)) ~= sign(y(i+1,1)))
             period = t(i) + t(i+1);
             notFoundT = false;
+            TIndex = [TIndex i];
         end
         i = i + 1;
     end
-    period
+    TVec = [TVec period];
     
     
     [t,y] = RK4_projekt(I0,T,n/2, L0,C);
@@ -100,9 +102,75 @@ for u0 = uVec
 
 end
 
+%% Fourier analysis.
+%for period = TVec;
+    
+    %vec = index:index:(pos-index-2);
+        
+   % Th=h*(sum(f)-(f(1)+f(n+1))/2)
+    %a(k) = 0;
 
- 
+    %for k = 1:14    
+      %a(k) = (2/period)* h*((y(2,1)*2*sin(k*w*t(2))) + sum(sin(k*w*t(vec)*y(vec,1)))+ ((y(pos,1)/2)*sin(k*w*t(pos))));
+   % end
+    
+    
+%end
 
 
 
+%L0 = 1;
+%C = 1*10^-6;
+
+%T = 0.3*0.05;
+%n = 5000*0.05;
+
+
+uVec = [240 1200 2400];
+plotCounter = 0;
+TVecCounter = 1;
+%I_vec = cell(3,1);
+for u0 = uVec
+
+    a = [];
+    plotCounter = plotCounter + 1;
+    subplot(3,2,plotCounter)
+    I0 = [0 u0/L0];
+    [t,y] = RK4_projekt(I0,T,n, L0,C);
+
+    
+    period = TVec(TVecCounter);
+    w = 2*pi/period;
+    stepPerPeriod = TIndex(TVecCounter);
+    h = period/stepPerPeriod;
+    %index = round(TIndex(TVecCounter)/stepPerPeriod); %Only integers allowed
+    indexVec = 1:TIndex(TVecCounter)/stepPerPeriod:TIndex(TVecCounter);
+    indexVec = round(indexVec); %in case of decimal index. 
+    
+    I_f = zeros(size(t,2),1);
+    for k = 1:14
+       a(k) = (2/period)*h*(sum(y(indexVec,1).*sin(k*w*(t(indexVec)')))-((y(1,1)*sin(k*w*t(1)))+y(indexVec(end),1)*sin(k*w*t(indexVec(end)))/2));
+       I_f = I_f + a(k)*sin(k*w*t(:));
+    end
+    a
+    %I_vec{TVecCounter,1} = I_f;
+    
+    
+    
+    
+    
+    plot(t,y(:,1),'b',t,I_f,'g'); %hold on;
+    title(sprintf('I(t) with U0 = %.f',u0));
+    plotCounter = plotCounter + 1;
+    xlim([0 0.015])
+   
+    %subplot(3,2,plotCounter)
+    %plot(t,C*(L0./(1+y(:,1).^2).*y(:,2)).^2+L0*log(1+y(:,1).^2),'g')
+    %title(sprintf('E(t) with U0 = %.f',u0)); 
+    
+    
+    TVeCounter = TVecCounter+1;
+    
+    
+end
 
