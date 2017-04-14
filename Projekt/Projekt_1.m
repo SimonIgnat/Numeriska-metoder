@@ -79,7 +79,7 @@ for u0 = uVec
         if(sign(y(i,1)) ~= sign(y(i+1,1)))
             period = t(i) + t(i+1);
             notFoundT = false;
-            TIndex = [TIndex i];
+            TIndex = [TIndex i*2];
         end
         i = i + 1;
     end
@@ -150,7 +150,7 @@ for u0 = uVec
     I_f = zeros(size(t,2),1);
     for k = 1:14
        a(k) = (2/period)*h*(sum(y(indexVec,1).*sin(k*w*(t(indexVec)')))-((y(1,1)*sin(k*w*t(1)))+y(indexVec(end),1)*sin(k*w*t(indexVec(end)))/2));
-       I_f = I_f + a(k)*sin(k*w*t(:));
+       I_f = I_f + a(k)*sin(k*w*t');
     end
     a
     %I_vec{TVecCounter,1} = I_f;
