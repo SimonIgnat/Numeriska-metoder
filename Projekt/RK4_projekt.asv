@@ -1,4 +1,3 @@
-        l0 = h*(2*x1(i)/(1+x1(i)^2)*x2(i)^2 - x1(i)*(1+x1(i)^2)/(L0*C));
 function [t,y] = RK4(I0,T,n, C, L0)
     x1 = zeros(1,n+1); % phi
     x2 = zeros(1,n+1); % phi'
@@ -17,8 +16,8 @@ function [t,y] = RK4(I0,T,n, C, L0)
         [k2 l2] = rk_func(x1(i)+(1/2)*k1*h,x2(i)+(1/2)*l1*h,L0,C);
         [k3 l3] = rk_func(x1(i)+k2*h,x2(i)+l2*h,L0,C);
         %[k4 l4] = rk_func(x1(i)+(1/2)*k3,x2(i)+(1/2)*l3);
-        x1(i+1) = x1(i)+h*(1/6)*(k0+2*k1+2*k2+k3);
-        x2(i+1) = x2(i)+h*(1/6)*(l0+2*l1+2*l2+l3);
+        x1(i+1) = x1(i)+(1/6)*(k0+2*k1+2*k2+k3);
+        x2(i+1) = x2(i)+(1/6)*(l0+2*l1+2*l2+l3);
         
         
         

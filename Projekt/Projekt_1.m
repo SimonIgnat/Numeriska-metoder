@@ -15,8 +15,8 @@ format long
 L0 = 1;
 C = 1*10^-6;
 
-T = 0.3*2;
-n = 5000*2;
+T = 0.3*10;
+n = 50000*10;
 
 uVec = [240 1200 2400];
 plotCounter = 0;
@@ -24,7 +24,7 @@ plotCounter = 0;
 for u0 = uVec
     plotCounter = plotCounter + 1;
     subplot(3,2,plotCounter)
-    I0 = [0 u0/L0]
+    I0 = [0 u0/L0];
     [t,y] = RK4_projekt(I0,T,n, L0,C);
     plot(t,y(:,1),'b');
     title(sprintf('I(t) with U0 = %.f',u0));
@@ -44,8 +44,8 @@ end
 
 %% Estimating max current and period at transient
 
-T = 0.3*0.05;
-n = 5000*0.05;
+%T = 0.3*0.05;
+%n = 5000*0.05;
 
 uVec = [240 1200 2400];
 %plotCounter = 0;
