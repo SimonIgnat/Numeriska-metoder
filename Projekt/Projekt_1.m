@@ -15,8 +15,14 @@ format long
 L0 = 1;
 C = 1*10^-6;
 
+<<<<<<< HEAD
 T = 0.3*10;
 n = 50000*10;
+=======
+
+T = 0.3*2;
+n = 5000*2;
+>>>>>>> origin/master
 
 uVec = [240 1200 2400];
 plotCounter = 0;
