@@ -1,4 +1,3 @@
-        l0 = h*(2*x1(i)/(1+x1(i)^2)*x2(i)^2 - x1(i)*(1+x1(i)^2)/(L0*C));
 function [t,y] = RK4(I0,T,n, C, L0)
     x1 = zeros(1,n+1); % phi
     x2 = zeros(1,n+1); % phi'
